@@ -12,7 +12,7 @@
 #include <Arduino.h>
 #include <Wire.h>
 #include <Adafruit_PWMServoDriver.h>
-#include "brush_motor.h"
+#include <brush_motor.h>
 
 #define OMNI_MOTOR_COUNT				(4)
 #define OMNI_MOTOR_RAMP_MS				(1000)
@@ -53,9 +53,10 @@ public:
 	void ramp_down(void);
 	void move(uint8_t dir, uint16_t ms, bool hard_stop=true);
 	void move_ramp(uint8_t dir, uint16_t ms);
-	void set_max_speed(uint16_t speed);
+	void set_speed(uint16_t speed);
 	void set_ramp_up_ms(uint16_t ramp_up_ms);
 	void set_ramp_down_ms(uint16_t ramp_down_ms);
+	void set_xy_speeds(int16_t x_speed, int16_t y_speed);
 
 private:
 	void update(void);

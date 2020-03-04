@@ -13,8 +13,9 @@
 #include <Wire.h>
 #include <Adafruit_PWMServoDriver.h>
 
-#define PWM_MAX							(4095)
 #define RAMP_STEP_MS					(10)
+#define PWM_MAX							(4095)
+#define MAX_SPEED						(PWM_MAX)
 
 enum {
     BM_DIR_STOP = 0,
@@ -29,10 +30,11 @@ class BrushMotor
 public:
 	void begin(Adafruit_PWMServoDriver *pwm, uint8_t a_pin, uint8_t b_pin,
 			uint8_t en_pin, uint8_t pwm_pin);
-	void set_dir(uint8_t dir);
 	void ramp_up(void);
 	void ramp_down(void);
-	void set_max_speed(uint16_t speed);
+	void set_dir(uint8_t dir);
+	void set_speed(uint16_t speed);
+	void set_speed_with_dir(int16_t speed);
 	void set_ramp_up_ms(uint16_t ramp_up_ms);
 	void set_ramp_down_ms(uint16_t ramp_down_ms);
 

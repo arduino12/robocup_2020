@@ -58,7 +58,7 @@ void setup()
 	/* init brush_motor */
 	brush_motor.begin(&pwm, MOTOR_B00_A_PIN, MOTOR_B00_B_PIN, MOTOR_B00_EN_PIN,
 			MOTOR_B00_PWM_PIN);
-	brush_motor.set_max_speed(PWM_MAX);
+	brush_motor.set_speed(MAX_SPEED);
 	brush_motor.set_ramp_up_ms(MOTOR_RAMP_MS);
 	brush_motor.set_ramp_down_ms(MOTOR_RAMP_MS);
 }

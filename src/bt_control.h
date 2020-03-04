@@ -1,0 +1,56 @@
+/*
+ * Bluetooth Omni test V1.
+ * Use with Dabble app!
+ * Moves the robot using the app joystick.
+ * 
+ * Arad Eizen 04/03/20.
+ */
+#ifndef _BT_CONTROL_H_
+#define _BT_CONTROL_H_
+
+#include <DabbleESP32.h>
+#include "robot.h"
+
+#define DABBLE_NAME					"Robocup2020!"
+#define DABBLE_AXIS_MIN				(-7)
+#define DABBLE_AXIS_MAX				(7)
+#define BT_CONTROL_LOOP_MS			(10)
+
+
+static uint16_t dabble_axis_to_speed(int8_t value)
+{
+	return map(value, DABBLE_AXIS_MIN, DABBLE_AXIS_MAX, -MAX_SPEED, MAX_SPEED);
+}
+
+void bt_control_begin()
+{
+	/* start bluetooth app server */
+	Dabble.begin(DABBLE_NAME);
+
+	/* print user instructions */
+	Serial.print("Connect to '");
+	Serial.print(DABBLE_NAME);
+	Serial.println("' via Bluetooth and go to Dabble app -> Gamepad -> Joystick Mode!");
+}
+
+void bt_control_loop()
+{
+	static uint32_t last_ms = 0;
+	uint32_t cur_ms = millis();
+
+	/* run our loop every BT_CONTROL_LOOP_MS milliseconds */
+	if ((cur_ms - last_ms) < BT_CONTROL_LOOP_MS)
+		return;
+
+	/* read joystick value from bluetooth app */
+	Dabble.processInput();
+
+	/* read joystick value from bluetooth app */
+	int16_t x = dabble_axis_to_speed(GamePad.getx_axis());
+	int16_t y = dabble_axis_to_speed(GamePad.gety_axis());
+
+	/* write x and y speeds to motors */
+	omni.set_xy_speeds(x, y);
+}
+
+#endif

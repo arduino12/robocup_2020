@@ -30,7 +30,7 @@ void setup()
 
 	/* init omni, half speed */
 	omni.begin(&Wire, PWM_OMNI_ADDRESS);
-	omni.set_max_speed(PWM_MAX / 2);
+	omni.set_speed(MAX_SPEED / 2);
 }
 
 void test_move()

@@ -33,11 +33,11 @@ void BrushMotor::ramp_up(void)
 	uint16_t steps = speed / (_ramp_up_ms / RAMP_STEP_MS);
 	
 	for (int16_t i = 0; i < speed; i += steps) {
-		set_max_speed(i);
+		set_speed(i);
 		delay(RAMP_STEP_MS);
 	}
 	
-	set_max_speed(speed);
+	set_speed(speed);
 }
 
 void BrushMotor::ramp_down(void)
@@ -46,20 +46,29 @@ void BrushMotor::ramp_down(void)
 	uint16_t steps = speed / (_ramp_up_ms / RAMP_STEP_MS);
 	
 	for (int16_t i = speed; i > 0; i -= steps) {
-		set_max_speed(i);
+		set_speed(i);
 		delay(RAMP_STEP_MS);
 	}
 
 	set_dir(BM_DIR_STOP);
-	set_max_speed(speed);
+	set_speed(speed);
 }
 
-void BrushMotor::set_max_speed(uint16_t speed)
+void BrushMotor::set_speed(uint16_t speed)
 {
-	if (speed > PWM_MAX)
-		speed = PWM_MAX;
+	if (speed > MAX_SPEED)
+		speed = MAX_SPEED;
 
 	_speed = speed;
+
+	update();
+}
+
+void BrushMotor::set_speed_with_dir(int16_t speed)
+{
+	speed = constrain(speed, -MAX_SPEED, MAX_SPEED);
+	_dir = (speed >= 0);
+	_speed = abs(speed);
 	update();
 }
 

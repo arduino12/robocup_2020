@@ -13,7 +13,7 @@ void Omni::begin(TwoWire *i2c_bus, uint8_t address)
 	/* init brush motors */
 	for (uint8_t i = 0; i < OMNI_MOTOR_COUNT; i++) {
 		_brush_motors[i].begin(&_pwm, 8 + i, 12 + i, 0 + i, 4 + i);
-		_brush_motors[i].set_max_speed(PWM_MAX);
+		_brush_motors[i].set_speed(PWM_MAX);
 		_brush_motors[i].set_ramp_up_ms(OMNI_MOTOR_RAMP_MS);
 		_brush_motors[i].set_ramp_down_ms(OMNI_MOTOR_RAMP_MS);
 	}
@@ -42,11 +42,11 @@ void Omni::ramp_up(void)
 	uint16_t steps = speed / (_ramp_up_ms / RAMP_STEP_MS);
 	
 	for (int16_t i = 0; i < speed; i += steps) {
-		set_max_speed(i);
+		set_speed(i);
 		delay(RAMP_STEP_MS);
 	}
 	
-	set_max_speed(speed);
+	set_speed(speed);
 }
 
 void Omni::ramp_down(void)
@@ -55,15 +55,15 @@ void Omni::ramp_down(void)
 	uint16_t steps = speed / (_ramp_up_ms / RAMP_STEP_MS);
 	
 	for (int16_t i = speed; i > 0; i -= steps) {
-		set_max_speed(i);
+		set_speed(i);
 		delay(RAMP_STEP_MS);
 	}
 
 	set_dir(BM_DIR_STOP);
-	set_max_speed(speed);
+	set_speed(speed);
 }
 
-void Omni::move(uint8_t dir, uint16_t ms, bool hard_stop=true)
+void Omni::move(uint8_t dir, uint16_t ms, bool hard_stop)
 {
 	set_dir(dir);
 
@@ -86,7 +86,7 @@ void Omni::move_ramp(uint8_t dir, uint16_t ms)
 	ramp_down();
 }
 
-void Omni::set_max_speed(uint16_t speed)
+void Omni::set_speed(uint16_t speed)
 {
 	if (speed > PWM_MAX)
 		speed = PWM_MAX;
@@ -94,7 +94,7 @@ void Omni::set_max_speed(uint16_t speed)
 	_speed = speed;
 
 	for (uint8_t i = 0; i < OMNI_MOTOR_COUNT; i++)
-		_brush_motors[i].set_max_speed(_speed);
+		_brush_motors[i].set_speed(_speed);
 
 	update();
 }
@@ -109,4 +109,12 @@ void Omni::set_ramp_down_ms(uint16_t ramp_down_ms)
 {
 	if (ramp_down_ms)
 		_ramp_down_ms = ramp_down_ms;
+}
+
+void Omni::set_xy_speeds(int16_t x_speed, int16_t y_speed)
+{
+	_brush_motors[0].set_speed_with_dir(y_speed);
+	_brush_motors[1].set_speed_with_dir(x_speed);
+	_brush_motors[2].set_speed_with_dir(-y_speed);
+	_brush_motors[3].set_speed_with_dir(-x_speed);
 }
