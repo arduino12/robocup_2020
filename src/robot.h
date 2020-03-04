@@ -27,7 +27,7 @@ void robot_begin()
 
 void robot_loop()
 {
-
+	/* TODO: add ramp up/down logic here and remove delay() from motors.. */
 }
 
 #endif
