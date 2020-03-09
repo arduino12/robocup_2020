@@ -67,7 +67,7 @@ void BrushMotor::set_speed(uint16_t speed)
 void BrushMotor::set_speed_with_dir(int16_t speed)
 {
 	speed = constrain(speed, -MAX_SPEED, MAX_SPEED);
-	_dir = (speed >= 0);
+	_dir = (speed >= 0 ? BM_DIR_FORWARD : BM_DIR_BACKWARD);
 	_speed = abs(speed);
 	update();
 }

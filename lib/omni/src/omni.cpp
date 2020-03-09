@@ -118,3 +118,11 @@ void Omni::set_xy_speeds(int16_t x_speed, int16_t y_speed)
 	_brush_motors[2].set_speed_with_dir(-y_speed);
 	_brush_motors[3].set_speed_with_dir(-x_speed);
 }
+
+void Omni::set_rotate_speed(int16_t speed)
+{
+	_brush_motors[0].set_speed_with_dir(speed);
+	_brush_motors[1].set_speed_with_dir(speed);
+	_brush_motors[2].set_speed_with_dir(speed);
+	_brush_motors[3].set_speed_with_dir(speed);
+}

@@ -41,6 +41,7 @@ void bt_control_loop()
 	/* run our loop every BT_CONTROL_LOOP_MS milliseconds */
 	if ((cur_ms - last_ms) < BT_CONTROL_LOOP_MS)
 		return;
+	last_ms = cur_ms;
 
 	/* read joystick value from bluetooth app */
 	Dabble.processInput();
@@ -48,9 +49,17 @@ void bt_control_loop()
 	/* read joystick value from bluetooth app */
 	int16_t x = dabble_axis_to_speed(GamePad.getx_axis());
 	int16_t y = dabble_axis_to_speed(GamePad.gety_axis());
+	int16_t r = 0;
+	if (GamePad.isCirclePressed())
+		r = MAX_SPEED / 2;
+	else if (GamePad.isSquarePressed())
+		r = -MAX_SPEED / 2;
 
-	/* write x and y speeds to motors */
-	omni.set_xy_speeds(x, y);
+	/* write x, y, r speeds to motors */
+	if (r)
+		omni.set_rotate_speed(r);
+	else
+		omni.set_xy_speeds(x, y);
 }
 
 #endif

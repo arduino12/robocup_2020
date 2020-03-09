@@ -18,7 +18,7 @@
 #define OMNI_MOTOR_RAMP_MS				(1000)
 
 #define PWM_OSCILLATOR_FREQ				(27000000)
-#define PWM_FREQ						(500)
+#define PWM_FREQ						(200)
 #define PWM_MAX							(4095)
 
 enum {
@@ -57,6 +57,7 @@ public:
 	void set_ramp_up_ms(uint16_t ramp_up_ms);
 	void set_ramp_down_ms(uint16_t ramp_down_ms);
 	void set_xy_speeds(int16_t x_speed, int16_t y_speed);
+	void set_rotate_speed(int16_t speed);
 
 private:
 	void update(void);
