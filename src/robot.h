@@ -22,7 +22,7 @@ void robot_begin()
 
 	/* init omni, half speed */
 	omni.begin(&Wire, PWM_OMNI_ADDRESS);
-	omni.set_speed(MAX_SPEED / 2);    
+	omni.set_speed(MAX_SPEED);    
 }
 
 void robot_loop()
