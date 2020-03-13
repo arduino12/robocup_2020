@@ -86,7 +86,10 @@ void BrushMotor::set_ramp_down_ms(uint16_t ramp_down_ms)
 
 void BrushMotor::pwm_write_analog(uint8_t pin, uint16_t value)
 {
-	_pwm->setPWM(pin, 0, value);
+	if (value < PWM_MAX)
+		_pwm->setPWM(pin, 0, value);
+	else
+		_pwm->setPWM(pin, PWM_MAX + 1, 0);
 }
 
 void BrushMotor::pwm_write_digital(uint8_t pin, bool value)
