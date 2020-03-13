@@ -8,6 +8,7 @@
  * Arad Eizen 22/02/20.
  */
 #include <Arduino.h>
+#include "ota.h"
 #include "robot.h"
 #include "bt_control.h"
 #include "pixy_control.h"
@@ -21,6 +22,9 @@ void setup()
 	/* init UART debug */
 	Serial.begin(UART_BAUDRATE);
 	Serial.println("Started!");
+
+	/* init wifi and ota update */
+	ota_begin();
 
 	/* init robot motors */
 	robot_begin();
@@ -37,4 +41,5 @@ void loop()
 	pixy_control_loop();
 	bt_control_loop();
 	robot_loop();
+	ota_loop();
 }

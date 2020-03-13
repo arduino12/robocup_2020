@@ -13,7 +13,7 @@
 #include <DabbleESP32.h>
 #include "robot.h"
 
-#define DABBLE_NAME						"Robocup2020!"
+#define DABBLE_NAME						"robocup2020!"
 #define DABBLE_AXIS_MIN					(-7)
 #define DABBLE_AXIS_MAX					(7)
 #define BT_CONTROL_LOOP_MS				(10)
@@ -29,9 +29,8 @@ void bt_control_begin()
 	Dabble.begin(DABBLE_NAME);
 
 	/* print user instructions */
-	Serial.print("Connect to '");
-	Serial.print(DABBLE_NAME);
-	Serial.println("' via Bluetooth and go to Dabble app -> Gamepad -> Joystick Mode!");
+	Serial.printf("Bluetooth started!\t%s\n", DABBLE_NAME);
+	Serial.println("    Go to smartphone Dabble app -> Gamepad -> Joystick Mode, and connect!");
 }
 
 void bt_control_loop()
