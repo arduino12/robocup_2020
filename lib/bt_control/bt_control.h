@@ -8,14 +8,15 @@
 #ifndef _BT_CONTROL_H_
 #define _BT_CONTROL_H_
 
+#if defined(ARDUINO_ARCH_ESP32)
+
 #include <DabbleESP32.h>
 #include "robot.h"
 
-#define DABBLE_NAME					"Robocup2020!"
-#define DABBLE_AXIS_MIN				(-7)
-#define DABBLE_AXIS_MAX				(7)
-#define BT_CONTROL_LOOP_MS			(10)
-
+#define DABBLE_NAME						"Robocup2020!"
+#define DABBLE_AXIS_MIN					(-7)
+#define DABBLE_AXIS_MAX					(7)
+#define BT_CONTROL_LOOP_MS				(10)
 
 static uint16_t dabble_axis_to_speed(int8_t value)
 {
@@ -61,5 +62,10 @@ void bt_control_loop()
 	else
 		omni.set_xy_speeds(x, y);
 }
+
+#else
+void bt_control_begin() { }
+void bt_control_loop() { }
+#endif
 
 #endif

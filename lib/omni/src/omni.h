@@ -17,8 +17,8 @@
 #define OMNI_MOTOR_COUNT				(4)
 #define OMNI_MOTOR_RAMP_MS				(1000)
 
-#define PWM_OSCILLATOR_FREQ				(27000000)
-#define PWM_FREQ						(200)
+#define OMNI_PWM_OSCILLATOR_FREQ		(27000000)
+#define OMNI_PWM_FREQ					(200)
 #define PWM_MAX							(4095)
 
 enum {

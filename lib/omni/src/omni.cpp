@@ -6,8 +6,8 @@ void Omni::begin(TwoWire *i2c_bus, uint8_t address)
 	/* init PCA9685 - I2C to PWM expender */
 	_pwm = Adafruit_PWMServoDriver(address);
 	_pwm.begin();
-	_pwm.setOscillatorFrequency(PWM_OSCILLATOR_FREQ);
-	_pwm.setPWMFreq(PWM_FREQ);
+	_pwm.setOscillatorFrequency(OMNI_PWM_OSCILLATOR_FREQ);
+	_pwm.setPWMFreq(OMNI_PWM_FREQ);
 	_pwm.setOutputMode(true);
 
 	/* init brush motors */

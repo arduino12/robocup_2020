@@ -1,24 +1,17 @@
 /*
- * 4x4 Omni wheels based robot.
- *
- * Connections:
- *  ________________________________
- * | Arduino	| ESP32	| PWM_BOARD	|
- * |____________|_______|___________|
- * | GND		| GND	| GND		|
- * |____________|_______|___________|
- * | A4			| 33	| SDA		|
- * |____________|_______|___________|
- * | A5			| 32	| SCL		|
- * |____________|_______|___________|
+ * Dancing robot for the Robocup 2020 competition!
+ * 	Motors:
+ * 		4 wheels omni drive, 14 servo axis arms, 2 linear actuators.
+ * 	Sensors:
+ * 		Pixy2 camera module, MPU6050 gyroscope + accelerometer module.
  * 
  * Arad Eizen 22/02/20.
  */
 #include <Arduino.h>
 #include "robot.h"
-#if defined(ARDUINO_ARCH_ESP32)
-	#include "bt_control.h"
-#endif
+#include "bt_control.h"
+#include "pixy_control.h"
+
 
 #define UART_BAUDRATE					(115200)
 
@@ -29,19 +22,19 @@ void setup()
 	Serial.begin(UART_BAUDRATE);
 	Serial.println("Started!");
 
-	/* init robot */
+	/* init robot motors */
 	robot_begin();
 
-#if defined(ARDUINO_ARCH_ESP32)
+	/* init pixy control */
+	pixy_control_begin();
+
 	/* init bluetooth control */
 	bt_control_begin();
-#endif
 }
 
 void loop()
 {
-#if defined(ARDUINO_ARCH_ESP32)
+	pixy_control_loop();
 	bt_control_loop();
-#endif
 	robot_loop();
 }
