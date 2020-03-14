@@ -32,7 +32,7 @@
 #define BLOCK_HEIGHT_MIN				(20)
 #define BLOCK_HEIGHT_MAX				(80)
 
-#define PIXY_CONTROL_LOOP_MS			(5)
+#define PIXY_CONTROL_LOOP_MS			(10)
 
 typedef struct {
 	uint8_t servo_pin;
@@ -43,7 +43,7 @@ typedef struct {
 	uint16_t block_x_max;
 } leg_t;
 
-leg_t legs[] = {
+const leg_t LEGS[] = {
 	{JOINTS_LEFT_LEG_ROLL, 400, 100, BLOCK_SIG_LEFT, PIXY_WIDTH / 2, PIXY_WIDTH},
 	{JOINTS_RIGHT_LEG_ROLL, 300, 600, BLOCK_SIG_RIGHT, 0, PIXY_WIDTH / 2},
 	{0}
@@ -58,7 +58,7 @@ void pixy_control_begin()
 
 void pixy_control_loop()
 {
-	static leg_t *leg = legs;
+	const static leg_t *leg = LEGS;
 	static uint32_t last_ms = 0;
 	uint32_t cur_ms = millis();
 
@@ -68,8 +68,8 @@ void pixy_control_loop()
 	last_ms = cur_ms;
 
 	/* cheack each leg at a time */
-	if (!++leg->block_sig)
-		leg = legs;
+	if (!(++leg)->block_sig)
+		leg = LEGS;
 
 	/* get a single block with matching sig */
 	pixy.ccc.getBlocks(false, _BV(leg->block_sig - 1), 1);
