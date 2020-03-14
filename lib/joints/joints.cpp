@@ -3,7 +3,7 @@
 void Joints::begin(TwoWire *i2c_bus, uint8_t address)
 {
 	/* init PCA9685 - I2C to PWM expender */
-	_pwm = Adafruit_PWMServoDriver(address);
+	_pwm = Adafruit_PWMServoDriver(address, *i2c_bus);
 	_pwm.begin();
 	_pwm.setOscillatorFrequency(JOINTS_PWM_OSCILLATOR_FREQ);
 	_pwm.setPWMFreq(JOINTS_PWM_FREQ);

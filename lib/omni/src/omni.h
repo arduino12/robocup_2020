@@ -32,7 +32,7 @@ enum {
     OMNI_DIR_DISABLED,
 };
 
-const uint8_t omni_dirs[][OMNI_MOTOR_COUNT] = {
+const uint8_t OMNI_DIRS[][OMNI_MOTOR_COUNT] = {
 	/* left				front				right				back			*/
 	{BM_DIR_STOP,		BM_DIR_STOP,		BM_DIR_STOP,		BM_DIR_STOP},		// OMNI_DIR_STOP
 	{BM_DIR_FORWARD,	BM_DIR_STOP,		BM_DIR_BACKWARD,	BM_DIR_STOP},		// OMNI_DIR_FORWARD

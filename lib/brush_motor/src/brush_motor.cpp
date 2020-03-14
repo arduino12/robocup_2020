@@ -1,6 +1,5 @@
 #include "brush_motor.h"
 
-
 void BrushMotor::begin(Adafruit_PWMServoDriver *pwm, uint8_t a_pin,
 		uint8_t b_pin, uint8_t en_pin, uint8_t pwm_pin)
 {

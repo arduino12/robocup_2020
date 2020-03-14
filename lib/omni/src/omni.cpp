@@ -1,10 +1,9 @@
 #include "omni.h"
 
-
 void Omni::begin(TwoWire *i2c_bus, uint8_t address)
 {
 	/* init PCA9685 - I2C to PWM expender */
-	_pwm = Adafruit_PWMServoDriver(address);
+	_pwm = Adafruit_PWMServoDriver(address, *i2c_bus);
 	_pwm.begin();
 	_pwm.setOscillatorFrequency(OMNI_PWM_OSCILLATOR_FREQ);
 	_pwm.setPWMFreq(OMNI_PWM_FREQ);
@@ -31,7 +30,7 @@ void Omni::set_dir(uint8_t dir)
 	_dir = dir;
 
 	for (uint8_t i = 0; i < OMNI_MOTOR_COUNT; i++)
-		_brush_motors[i].set_dir(omni_dirs[dir][i]);
+		_brush_motors[i].set_dir(OMNI_DIRS[dir][i]);
 
 	update();
 }

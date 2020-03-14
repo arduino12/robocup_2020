@@ -24,7 +24,6 @@ enum {
     BM_DIR_DISABLED = 3,
 };
 
-
 class BrushMotor
 {
 public:

@@ -13,9 +13,7 @@
 #include "bt_control.h"
 #include "pixy_control.h"
 
-
 #define UART_BAUDRATE					(115200)
-
 
 void setup()
 {
